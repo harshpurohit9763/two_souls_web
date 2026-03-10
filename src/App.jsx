@@ -13,7 +13,7 @@ export default function App() {
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [waitlistError, setWaitlistError] = useState('');
   const [waitlistCount, setWaitlistCount] = useState(0);
-  
+
   const [suggestion, setSuggestion] = useState('');
   const [suggestionSent, setSuggestionSent] = useState(false);
   const [isSubmittingSuggestion, setIsSubmittingSuggestion] = useState(false);
@@ -51,7 +51,7 @@ export default function App() {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
-    
+
     // Animate the chat mockup loop
     const chatInterval = setInterval(() => {
       setChatStep(prev => (prev >= 4 ? 0 : prev + 1));
@@ -143,9 +143,9 @@ export default function App() {
   const handleJoinWaitlist = async (e) => {
     e.preventDefault();
     const trimmedEmail = email.trim().toLowerCase();
-    
+
     if (!trimmedEmail) return;
-    
+
     if (!isValidEmail(trimmedEmail)) {
       setWaitlistError("Please enter a valid email address.");
       return;
@@ -194,7 +194,7 @@ export default function App() {
     const isCurrentlyVoted = localUserVotes.includes(id);
 
     // Optimistic local update
-    setLocalUserVotes(prev => 
+    setLocalUserVotes(prev =>
       isCurrentlyVoted ? prev.filter(vId => vId !== id) : [...prev, id]
     );
 
@@ -203,7 +203,7 @@ export default function App() {
     } catch (error) {
       console.error("Vote failed", error);
       // Revert on error
-      setLocalUserVotes(prev => 
+      setLocalUserVotes(prev =>
         isCurrentlyVoted ? [...prev.filter(vId => vId !== id), id] : prev.filter(vId => vId !== id)
       );
     }
@@ -230,7 +230,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-rose-500/30 scroll-smooth">
-      
+
       {/* Navbar */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-950/90 backdrop-blur-md border-b border-white/10 py-2' : 'bg-transparent py-4'}`}>
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -244,8 +244,8 @@ export default function App() {
             <a href="#concept" className="hover:text-rose-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:bg-rose-400 after:transition-all after:duration-300">The Concept</a>
             <a href="#features" className="hover:text-rose-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:bg-rose-400 after:transition-all after:duration-300">Feature Voting</a>
           </div>
-          <a 
-            href="#waitlist" 
+          <a
+            href="#waitlist"
             className="bg-white text-slate-900 px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-rose-50 hover:scale-105 active:scale-95 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]"
           >
             Join Waitlist
@@ -264,21 +264,21 @@ export default function App() {
             <Sparkles className="w-4 h-4 animate-pulse" />
             <span>A private space for just the two of you</span>
           </div>
-          
+
           <h1 className={`text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-tight transform transition-all duration-1000 delay-150 ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             Two Souls. One Space. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-fuchsia-400 to-purple-500 animate-gradient-x">
               A Shared Journey.
             </span>
           </h1>
-          
+
           <p className={`text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed transform transition-all duration-1000 delay-300 ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             More than just a messaging app. Chat securely, share your location, sync your favorite music, and build a digital memory timeline together—away from the noise of the world.
           </p>
 
           {/* Waitlist Form */}
           <div id="waitlist" className={`max-w-md mx-auto bg-white/5 p-4 rounded-3xl border border-white/10 backdrop-blur-md shadow-2xl shadow-rose-900/20 transform transition-all duration-1000 delay-500 ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:border-rose-500/30`}>
-            
+
             {/* Subscribed Users Banner */}
             <div className="mb-5 flex justify-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-lg shadow-black/20">
@@ -304,16 +304,16 @@ export default function App() {
             {!isWaitlisted ? (
               <div className="relative">
                 <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row gap-2 relative">
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email address" 
+                    placeholder="Enter your email address"
                     required
                     disabled={isSubmittingWaitlist}
                     className="flex-1 bg-black/40 border border-white/5 rounded-xl focus:ring-1 focus:ring-rose-500/50 px-4 py-3 text-white placeholder-slate-500 outline-none disabled:opacity-50 transition-all"
                   />
-                  <button 
+                  <button
                     type="submit"
                     disabled={isSubmittingWaitlist}
                     className="bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-400 hover:to-purple-500 text-white px-6 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 group disabled:opacity-80 active:scale-95 shadow-lg shadow-rose-500/20"
@@ -338,7 +338,7 @@ export default function App() {
                   <CheckCircle2 className="w-5 h-5 animate-bounce" />
                   <span className="font-medium text-emerald-400">Spot secured! We'll be in touch.</span>
                 </div>
-                <button 
+                <button
                   onClick={handleWithdraw}
                   disabled={isWithdrawing}
                   className="text-xs text-slate-500 hover:text-rose-400 transition-colors underline underline-offset-4 flex items-center gap-1 active:scale-95"
@@ -355,14 +355,14 @@ export default function App() {
       <section className="py-20 relative z-10 overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-24">
-            
+
             {/* Mobile Mockup 1: Chat */}
             <div className="relative w-[300px] h-[600px] bg-slate-950 border-[8px] border-slate-800 rounded-[3rem] shadow-2xl shadow-rose-500/10 overflow-hidden flex flex-col transform transition-all duration-500 hover:-translate-y-2 hover:shadow-rose-500/20 group">
               {/* Hardware Notch */}
               <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-30">
                 <div className="w-32 h-6 bg-slate-800 rounded-b-3xl"></div>
               </div>
-              
+
               {/* App Header */}
               <div className="pt-10 pb-4 px-5 bg-slate-900/80 backdrop-blur-md border-b border-white/10 flex justify-between items-center z-20">
                 <div className="flex items-center gap-3">
@@ -409,7 +409,7 @@ export default function App() {
                     Perfect. I'll share my location when I leave the office! 📍
                   </div>
                 </div>
-                
+
                 {/* Typing indicator */}
                 <div className={`transition-all duration-300 transform ${chatStep === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} absolute bottom-5 left-5`}>
                   <div className="bg-slate-800 rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1 w-fit">
@@ -441,7 +441,7 @@ export default function App() {
 
               {/* Map Background (CSS Pattern) */}
               <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]"></div>
-              
+
               <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-transparent to-slate-950"></div>
 
               {/* App Header */}
@@ -524,21 +524,21 @@ export default function App() {
             <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-rose-500/0 via-rose-500/30 to-rose-500/0"></div>
 
             {[
-              { 
+              {
                 step: "01",
-                title: "Download the App", 
+                title: "Download the App",
                 desc: "Both you and your partner download Two Souls and create your individual secure accounts.",
                 icon: <Smartphone className="w-6 h-6 text-rose-400" />
               },
-              { 
+              {
                 step: "02",
-                title: "Share Your Soul Code", 
+                title: "Share Your Soul Code",
                 desc: "Generate a unique, time-sensitive pairing code and share it securely with your partner.",
                 icon: <UserPlus className="w-6 h-6 text-rose-400" />
               },
-              { 
+              {
                 step: "03",
-                title: "Start Your Journey", 
+                title: "Start Your Journey",
                 desc: "Once paired, your private space is unlocked. Start chatting, sharing, and building memories.",
                 icon: <Heart className="w-6 h-6 text-rose-400" />
               }
@@ -571,24 +571,24 @@ export default function App() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { 
-                title: "Private Communication", 
+              {
+                title: "Private Communication",
                 desc: "An exclusive sanctuary for your chats, voice notes, and video calls. No group chats, no social feeds—just the two of you.",
                 icon: <MessageCircle className="w-8 h-8 text-rose-400" />
               },
-              { 
-                title: "Your Digital Scrapbook", 
+              {
+                title: "Your Digital Scrapbook",
                 desc: "Never lose a moment. Track anniversaries and build a timeline of shared memories that won't get lost in your endless camera roll.",
                 icon: <Calendar className="w-8 h-8 text-rose-400" />
               },
-              { 
-                title: "Shared Life Management", 
+              {
+                title: "Shared Life Management",
                 desc: "Coordinate your lives seamlessly with shared to-do lists for groceries, dates, or chores, alongside optional live location sharing.",
                 icon: <ListTodo className="w-8 h-8 text-rose-400" />
               }
             ].map((item, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="group bg-slate-950/50 backdrop-blur-sm p-10 rounded-3xl border border-white/10 hover:border-rose-500/50 transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-rose-500/10 cursor-default"
               >
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-500/10 to-purple-500/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 border border-white/5 group-hover:border-rose-500/30">
@@ -608,7 +608,7 @@ export default function App() {
       <section className="py-16 relative overflow-hidden bg-gradient-to-r from-rose-950 via-slate-900 to-purple-950 border-y border-white/10">
         {/* Animated pattern overlay */}
         <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')]"></div>
-        
+
         <div className="max-w-5xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-4">
@@ -620,11 +620,143 @@ export default function App() {
               Your relationship is your business. We use end-to-end encryption for your messages and strict opt-in protocols for location sharing. No ads, no data mining.
             </p>
           </div>
-          
+
           <div className="shrink-0">
             <div className="w-32 h-32 rounded-3xl bg-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl shadow-rose-500/20 transform rotate-3 hover:rotate-0 transition-transform duration-500">
               <Lock className="w-12 h-12 text-rose-300" />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Security & Productivity Previews */}
+      <section className="py-20 relative z-10 overflow-hidden bg-slate-950">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-24">
+
+            {/* Mobile Mockup 3: Security & Encryption */}
+            <div className="relative w-[300px] h-[600px] bg-slate-950 border-[8px] border-slate-800 rounded-[3rem] shadow-2xl shadow-rose-900/10 overflow-hidden flex flex-col transform transition-all duration-500 hover:-translate-y-2 hover:shadow-rose-900/20 group">
+              {/* Hardware Notch */}
+              <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-30">
+                <div className="w-32 h-6 bg-slate-800 rounded-b-3xl"></div>
+              </div>
+
+              {/* App Header */}
+              <div className="pt-10 pb-4 px-5 bg-slate-900/80 backdrop-blur-md border-b border-white/10 flex justify-center items-center z-20">
+                <h3 className="font-bold text-white text-lg drop-shadow-md flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400" /> Security
+                </h3>
+              </div>
+
+              {/* Encryption UI Body */}
+              <div className="flex-1 p-6 flex flex-col gap-6 overflow-hidden relative bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 to-slate-950 items-center justify-center">
+
+                <div className="relative w-32 h-32 mb-4">
+                  <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping delay-100"></div>
+                  <div className="absolute inset-4 bg-emerald-500/30 rounded-full animate-ping delay-300"></div>
+                  <div className="absolute inset-8 bg-slate-900 border-2 border-emerald-500 rounded-full flex items-center justify-center relative z-10 shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+                    <Lock className="w-8 h-8 text-emerald-400" />
+                  </div>
+                </div>
+
+                <div className="text-center space-y-2">
+                  <h4 className="text-white font-bold text-xl">End-to-End Encrypted</h4>
+                  <p className="text-slate-400 text-sm">Your calls, messages, and memories are secured with state-of-the-art encryption.</p>
+                </div>
+
+                <div className="w-full mt-6 space-y-3">
+                  <div className="bg-slate-800/50 rounded-xl p-4 flex items-center justify-between border border-white/5">
+                    <div className="flex items-center gap-3">
+                      <Smartphone className="w-5 h-5 text-slate-300" />
+                      <span className="text-sm font-medium text-slate-200">Session Keys</span>
+                    </div>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div className="bg-slate-800/50 rounded-xl p-4 flex items-center justify-between border border-white/5">
+                    <div className="flex items-center gap-3">
+                      <Lock className="w-5 h-5 text-slate-300" />
+                      <span className="text-sm font-medium text-slate-200">Zero-Knowledge</span>
+                    </div>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Mockup 4: Todos */}
+            <div className="relative w-[300px] h-[600px] bg-slate-950 border-[8px] border-slate-800 rounded-[3rem] shadow-2xl shadow-indigo-500/10 overflow-hidden flex flex-col transform transition-all duration-500 hover:-translate-y-2 hover:shadow-indigo-500/20 group">
+              {/* Hardware Notch */}
+              <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-30">
+                <div className="w-32 h-6 bg-slate-800 rounded-b-3xl"></div>
+              </div>
+
+              {/* App Header */}
+              <div className="pt-10 pb-4 px-5 bg-indigo-950/80 backdrop-blur-md border-b border-indigo-500/20 flex justify-between items-center z-20">
+                <h3 className="font-bold text-white text-lg drop-shadow-md flex items-center gap-2">
+                  <ListTodo className="w-5 h-5 text-indigo-400" /> Shared Lists
+                </h3>
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white font-bold cursor-pointer hover:bg-white/20 transition-colors">
+                  +
+                </div>
+              </div>
+
+              {/* Todos UI Body */}
+              <div className="flex-1 p-5 flex flex-col gap-4 overflow-hidden relative bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/40 to-slate-950">
+
+                <div className="flex justify-between items-end mb-2">
+                  <h4 className="text-white font-bold">Groceries 🛒</h4>
+                  <span className="text-[10px] text-slate-500">2/4 done</span>
+                </div>
+
+                <div className="space-y-2">
+                  {/* Completed item */}
+                  <div className="bg-slate-900/80 rounded-xl p-3.5 flex items-center gap-3 border border-indigo-500/10 opacity-60">
+                    <div className="w-5 h-5 rounded border border-indigo-400 bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                      <CheckCircle2 className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-400 line-through">Almond Milk</span>
+                  </div>
+
+                  {/* Active items */}
+                  <div className="bg-slate-800/90 rounded-xl p-3.5 flex items-center gap-3 border border-indigo-500/30 shadow-lg shadow-indigo-900/20 relative overflow-hidden">
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500"></div>
+                    <div className="w-5 h-5 rounded border border-slate-600 flex items-center justify-center cursor-pointer">
+                    </div>
+                    <span className="text-sm font-medium text-white">Avocados</span>
+                    <div className="ml-auto w-5 h-5 rounded-full bg-gradient-to-tr from-rose-400 to-purple-500 border border-slate-900 shadow-sm relative shrink-0">
+                      <span className="absolute inset-0 flex items-center justify-center text-[8px] font-bold text-white">B</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-800/90 rounded-xl p-3.5 flex items-center gap-3 border border-white/5 shadow-md">
+                    <div className="w-5 h-5 rounded border border-slate-600 flex items-center justify-center"></div>
+                    <span className="text-sm font-medium text-slate-200">Coffee Beans</span>
+                  </div>
+
+                  <div className="bg-slate-900/80 rounded-xl p-3.5 flex items-center gap-3 border border-indigo-500/10 opacity-60 mt-1">
+                    <div className="w-5 h-5 rounded border border-indigo-400 bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                      <CheckCircle2 className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-400 line-through">Pasta</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-end mt-4 mb-2">
+                  <h4 className="text-white font-bold">Weekend Trip ✈️</h4>
+                </div>
+                <div className="space-y-2">
+                  <div className="bg-slate-800/90 rounded-xl p-3.5 flex items-center gap-3 border border-white/5 shadow-md">
+                    <div className="w-5 h-5 rounded border border-slate-600 flex items-center justify-center"></div>
+                    <span className="text-sm font-medium text-slate-200">Book Airbnb</span>
+                    <div className="ml-auto w-5 h-5 bg-emerald-500 rounded-full border border-slate-900 shadow-sm relative shrink-0">
+                      <span className="absolute inset-0 flex items-center justify-center text-[8px] font-bold text-white">ME</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -635,29 +767,29 @@ export default function App() {
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="bg-gradient-to-br from-slate-900 to-slate-950 p-8 md:p-12 rounded-[2.5rem] border border-white/10 relative overflow-hidden shadow-2xl">
             <Quote className="absolute top-8 right-8 w-32 h-32 text-white/5 rotate-12" />
-            
+
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs font-bold uppercase tracking-widest mb-8">
                 <PenTool className="w-4 h-4" />
                 <span>Why We're Building This</span>
               </div>
-              
+
               <h2 className="text-2xl md:text-4xl font-bold mb-8 text-white leading-snug">
                 "Our relationship memories were getting lost in a sea of group chats, work emails, and social media noise."
               </h2>
-              
+
               <div className="space-y-5 text-slate-400 text-lg leading-relaxed mb-10">
                 <p>
                   I started building Two Souls because I wanted a quiet, private sanctuary just for my partner and me. Existing communication apps are designed to connect you with the entire world, but nothing was built specifically to deepen the connection with your favorite person.
                 </p>
                 <p>
-                  <strong className="text-slate-200">Two Souls is currently in active development.</strong> We aren't backed by massive corporations; we are writing the code and shaping this app right now, alongside early adopters like you. 
+                  <strong className="text-slate-200">Two Souls is currently in active development.</strong> We aren't backed by massive corporations; we are writing the code and shaping this app right now, alongside early adopters like you.
                 </p>
                 <p>
                   By joining the waitlist, you aren't just waiting for an app—you are helping us decide what gets built next.
                 </p>
               </div>
-              
+
               <div className="flex items-center gap-4 pt-6 border-t border-white/10">
                 <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-rose-500 to-purple-600 p-1">
                   <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center">
@@ -689,69 +821,67 @@ export default function App() {
             {features.map((feature) => {
               const isVoted = localUserVotes.includes(feature.id);
               return (
-              <div 
-                key={feature.id} 
-                className={`group p-6 rounded-2xl border transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 hover:shadow-xl hover:-translate-y-1 ${
-                  isVoted 
-                  ? 'bg-gradient-to-r from-rose-500/10 to-transparent border-rose-500/50 shadow-rose-900/20' 
-                  : 'bg-slate-900/50 border-white/10 hover:border-white/30 hover:bg-slate-800/50'
-                }`}
-              >
-                <div className="flex items-start gap-5">
-                  <div className={`p-4 rounded-xl mt-1 sm:mt-0 transition-colors duration-300 ${isVoted ? 'bg-rose-500/20 shadow-inner shadow-rose-500/20' : 'bg-white/5 group-hover:bg-white/10'}`}>
-                    <div className="transform group-hover:scale-110 transition-transform duration-300">
-                      {feature.icon}
+                <div
+                  key={feature.id}
+                  className={`group p-6 rounded-2xl border transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 hover:shadow-xl hover:-translate-y-1 ${isVoted
+                      ? 'bg-gradient-to-r from-rose-500/10 to-transparent border-rose-500/50 shadow-rose-900/20'
+                      : 'bg-slate-900/50 border-white/10 hover:border-white/30 hover:bg-slate-800/50'
+                    }`}
+                >
+                  <div className="flex items-start gap-5">
+                    <div className={`p-4 rounded-xl mt-1 sm:mt-0 transition-colors duration-300 ${isVoted ? 'bg-rose-500/20 shadow-inner shadow-rose-500/20' : 'bg-white/5 group-hover:bg-white/10'}`}>
+                      <div className="transform group-hover:scale-110 transition-transform duration-300">
+                        {feature.icon}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2 text-slate-100">{feature.title}</h3>
+                      <p className="text-slate-400 text-base leading-relaxed">{feature.desc}</p>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2 text-slate-100">{feature.title}</h3>
-                    <p className="text-slate-400 text-base leading-relaxed">{feature.desc}</p>
-                  </div>
+
+                  <button
+                    onClick={() => handleVote(feature.id)}
+                    className={`shrink-0 flex items-center gap-3 px-6 py-4 rounded-xl font-bold transition-all duration-300 w-full sm:w-auto justify-center active:scale-90 ${isVoted
+                        ? 'bg-rose-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]'
+                        : 'bg-white/5 text-slate-300 hover:bg-white/15 hover:text-white'
+                      }`}
+                  >
+                    <Heart className={`w-5 h-5 transition-all duration-500 ${isVoted ? 'fill-white scale-110' : 'group-hover/btn:scale-110'}`} />
+                    <span className="min-w-[4ch] text-center">{feature.votes}</span>
+                    <span className="font-medium text-sm opacity-80">{isVoted ? 'Voted' : 'Vote'}</span>
+                  </button>
                 </div>
-                
-                <button 
-                  onClick={() => handleVote(feature.id)}
-                  className={`shrink-0 flex items-center gap-3 px-6 py-4 rounded-xl font-bold transition-all duration-300 w-full sm:w-auto justify-center active:scale-90 ${
-                    isVoted 
-                    ? 'bg-rose-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]' 
-                    : 'bg-white/5 text-slate-300 hover:bg-white/15 hover:text-white'
-                  }`}
-                >
-                  <Heart className={`w-5 h-5 transition-all duration-500 ${isVoted ? 'fill-white scale-110' : 'group-hover/btn:scale-110'}`} />
-                  <span className="min-w-[4ch] text-center">{feature.votes}</span>
-                  <span className="font-medium text-sm opacity-80">{isVoted ? 'Voted' : 'Vote'}</span>
-                </button>
-              </div>
-            )})}
+              )
+            })}
           </div>
 
           {/* Custom Suggestion Box */}
           <div className="mt-16 bg-gradient-to-br from-slate-900 to-slate-950 p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/5 rounded-full blur-[60px] group-hover:bg-rose-500/10 transition-colors duration-700"></div>
-            
+
             <div className="relative z-10">
               <h3 className="text-2xl font-bold mb-3">Have another idea?</h3>
               <p className="text-slate-400 mb-8 text-base">Tell us what else would make connecting with your partner easier. We read every submission.</p>
-              
+
               <div className="relative">
                 <form onSubmit={handleSuggestionSubmit} className="flex flex-col gap-4">
-                  <textarea 
+                  <textarea
                     value={suggestion}
                     onChange={(e) => setSuggestion(e.target.value)}
                     disabled={isSubmittingSuggestion || suggestionSent}
-                    placeholder="E.g. Couple games, custom chat themes..." 
+                    placeholder="E.g. Couple games, custom chat themes..."
                     rows={5}
                     className="w-full bg-black/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all disabled:opacity-50 resize-y"
                   />
                   <div className="flex justify-end">
-                    <button 
+                    <button
                       type="submit"
                       disabled={isSubmittingSuggestion || suggestionSent}
-                      className={`px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-90 ${
-                        suggestionSent 
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' 
-                        : 'bg-white text-slate-900 hover:bg-rose-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
-                      }`}
+                      className={`px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-90 ${suggestionSent
+                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50'
+                          : 'bg-white text-slate-900 hover:bg-rose-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
+                        }`}
                     >
                       {isSubmittingSuggestion ? (
                         <Loader2 className="w-5 h-5 animate-spin" />
@@ -786,18 +916,18 @@ export default function App() {
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 ${openFaq === index ? 'bg-slate-800/80 border-rose-500/30' : 'bg-slate-950 hover:bg-slate-900 hover:border-white/20'}`}
               >
-                <button 
+                <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                 >
                   <span className="font-bold text-lg text-slate-100">{faq.q}</span>
                   <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-300 shrink-0 ml-4 ${openFaq === index ? 'rotate-180 text-rose-400' : ''}`} />
                 </button>
-                <div 
+                <div
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaq === index ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'}`}
                 >
                   <p className="p-6 pt-0 text-slate-400 leading-relaxed border-t border-white/5 mt-2">
