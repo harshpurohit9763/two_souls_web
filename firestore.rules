@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Waitlist - Secure PII (Emails)
+    match /waitlist/{doc} {
+      // NO ONE can read the waitlist to protect emails
+      allow read: if false;
+      // Anyone can create, but only if they submit an email
+      allow create: if request.resource.data.keys().hasAll(['email', 'createdAt']) &&
+                    request.resource.data.email is string &&
+                    request.resource.data.email.matches('^[^@]+@[^@]+\\.[^@]+$');
+      allow delete: if true; // Allow users to withdraw their email
+    }
+
+    // 1.5 Withdraw Requests (Store withdrawn emails)
+    match /withdraw_requests/{doc} {
+      allow read: if false;
+      allow create: if request.resource.data.keys().hasAll(['email', 'withdrawnAt']);
+    }
+
+    // 2. Suggestions
+    match /suggestions/{doc} {
+      // NO ONE can read others' suggestions
+      allow read: if false;
+      // Anyone can create a suggestion as long as it has text and deviceId
+      allow create: if request.resource.data.keys().hasAll(['text', 'deviceId', 'createdAt']) &&
+                    request.resource.data.text is string &&
+                    request.resource.data.deviceId is string;
+    }
+
+    // 3. Feature Votes
+    match /feature_votes/{featureId} {
+      // ANYONE can read the live votes
+      allow read: if true;
+      // You must allow create initially to populate the data if it's empty
+      allow create: if true; 
+      // STRICT updates: Only allow exactly +1 or -1 increments to prevent infinite spamming
+      allow update: if request.resource.data.votes == resource.data.votes + 1 ||
+                     request.resource.data.votes == resource.data.votes - 1;
+    }
+
+    // 4. Feature User Votes (Device Tracking)
+    match /feature_user_votes/{voteId} {
+      // Only allow reading a specific vote document (needed for getDoc to check if voted)
+      allow get: if true;
+      allow list: if false; // Prevent scraping all device IDs and fetching the entire list
+      
+      // Allow creating and deleting your own vote record
+      allow create: if request.resource.data.keys().hasAll(['deviceId', 'featureId', 'createdAt']);
+      allow delete: if true;
+    }
+
+    // 5. Global Stats (Waitlist Counter)
+    match /stats/counters {
+      // ANYONE can read the live counter
+      allow read: if true;
+      // Need create for initialization
+      allow create: if true; 
+      // STRICT update: Only allow incrementing/decrementing the waitlistCount by exactly 1
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['waitlistCount']) &&
+                    (request.resource.data.waitlistCount == resource.data.waitlistCount + 1 ||
+                     request.resource.data.waitlistCount == resource.data.waitlistCount - 1);
+    }
+  }
+}
