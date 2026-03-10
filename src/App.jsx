@@ -824,8 +824,8 @@ export default function App() {
                 <div
                   key={feature.id}
                   className={`group p-6 rounded-2xl border transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 hover:shadow-xl hover:-translate-y-1 ${isVoted
-                      ? 'bg-gradient-to-r from-rose-500/10 to-transparent border-rose-500/50 shadow-rose-900/20'
-                      : 'bg-slate-900/50 border-white/10 hover:border-white/30 hover:bg-slate-800/50'
+                    ? 'bg-gradient-to-r from-rose-500/10 to-transparent border-rose-500/50 shadow-rose-900/20'
+                    : 'bg-slate-900/50 border-white/10 hover:border-white/30 hover:bg-slate-800/50'
                     }`}
                 >
                   <div className="flex items-start gap-5">
@@ -843,8 +843,8 @@ export default function App() {
                   <button
                     onClick={() => handleVote(feature.id)}
                     className={`shrink-0 flex items-center gap-3 px-6 py-4 rounded-xl font-bold transition-all duration-300 w-full sm:w-auto justify-center active:scale-90 ${isVoted
-                        ? 'bg-rose-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]'
-                        : 'bg-white/5 text-slate-300 hover:bg-white/15 hover:text-white'
+                      ? 'bg-rose-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)]'
+                      : 'bg-white/5 text-slate-300 hover:bg-white/15 hover:text-white'
                       }`}
                   >
                     <Heart className={`w-5 h-5 transition-all duration-500 ${isVoted ? 'fill-white scale-110' : 'group-hover/btn:scale-110'}`} />
@@ -879,8 +879,8 @@ export default function App() {
                       type="submit"
                       disabled={isSubmittingSuggestion || suggestionSent}
                       className={`px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-90 ${suggestionSent
-                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50'
-                          : 'bg-white text-slate-900 hover:bg-rose-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50'
+                        : 'bg-white text-slate-900 hover:bg-rose-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
                         }`}
                     >
                       {isSubmittingSuggestion ? (
