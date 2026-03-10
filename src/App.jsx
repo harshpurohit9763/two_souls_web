@@ -734,35 +734,37 @@ export default function App() {
               <p className="text-slate-400 mb-8 text-base">Tell us what else would make connecting with your partner easier. We read every submission.</p>
               
               <div className="relative">
-                <form onSubmit={handleSuggestionSubmit} className="flex flex-col sm:flex-row gap-3">
-                  <input 
-                    type="text" 
+                <form onSubmit={handleSuggestionSubmit} className="flex flex-col gap-4">
+                  <textarea 
                     value={suggestion}
                     onChange={(e) => setSuggestion(e.target.value)}
                     disabled={isSubmittingSuggestion || suggestionSent}
                     placeholder="E.g. Couple games, custom chat themes..." 
-                    className="flex-1 bg-black/50 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all disabled:opacity-50"
+                    rows={5}
+                    className="w-full bg-black/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all disabled:opacity-50 resize-y"
                   />
-                  <button 
-                    type="submit"
-                    disabled={isSubmittingSuggestion || suggestionSent}
-                    className={`px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-90 ${
-                      suggestionSent 
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' 
-                      : 'bg-white text-slate-900 hover:bg-rose-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
-                    }`}
-                  >
-                    {isSubmittingSuggestion ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : suggestionSent ? (
-                      <CheckCircle2 className="w-5 h-5" />
-                    ) : (
-                      <Send className="w-5 h-5" />
-                    )}
-                    <span className="hidden sm:inline">
-                      {isSubmittingSuggestion ? 'Sending...' : suggestionSent ? 'Received!' : 'Suggest'}
-                    </span>
-                  </button>
+                  <div className="flex justify-end">
+                    <button 
+                      type="submit"
+                      disabled={isSubmittingSuggestion || suggestionSent}
+                      className={`px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-90 ${
+                        suggestionSent 
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' 
+                        : 'bg-white text-slate-900 hover:bg-rose-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
+                      }`}
+                    >
+                      {isSubmittingSuggestion ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : suggestionSent ? (
+                        <CheckCircle2 className="w-5 h-5" />
+                      ) : (
+                        <Send className="w-5 h-5" />
+                      )}
+                      <span className="sm:inline">
+                        {isSubmittingSuggestion ? 'Sending...' : suggestionSent ? 'Received!' : 'Submit Suggestion'}
+                      </span>
+                    </button>
+                  </div>
                 </form>
                 {suggestionError && (
                   <p className="absolute -bottom-6 left-2 text-xs text-rose-400 font-medium">{suggestionError}</p>
